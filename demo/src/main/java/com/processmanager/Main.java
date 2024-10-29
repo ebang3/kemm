@@ -17,7 +17,7 @@ public class Main {
         // Get a list of all processes, sorted by CPU usage
         List<OSProcess> processes = os.getProcesses();
 
-        // Display process information
+        // Parse through each process and get its corresponding information
         for (OSProcess process : processes) {
             String processName = process.getName();
             int processID = process.getProcessID();
