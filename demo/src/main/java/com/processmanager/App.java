@@ -23,18 +23,6 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        // SystemInfo sysInfo = new SystemInfo();
-        // OperatingSystem os = sysInfo.getOperatingSystem();
-
-        // List<OSProcess> processes = os.getProcesses();
-
-        // for (OSProcess process : processes) {
-        // System.out.println("Process ID: " + process.getProcessID());
-        // System.out.println("Process Name: " + process.getName());
-        // System.out.println("User: " + process.getUser());
-        // System.out.println("Command Line: " + process.getCommandLine());
-        // System.out.println();
-        // }
 
         scene = new Scene(loadFXML("primary"), 640, 480);
         stage.setScene(scene);

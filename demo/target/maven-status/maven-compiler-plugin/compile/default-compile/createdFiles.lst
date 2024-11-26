@@ -1,3 +1,5 @@
 com\processmanager\App.class
 com\processmanager\PrimaryController.class
+com\processmanager\PrimaryController$1.class
+com\processmanager\ProcessData.class
 com\processmanager\SecondaryController.class
