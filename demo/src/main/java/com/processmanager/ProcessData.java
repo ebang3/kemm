@@ -1,12 +1,8 @@
 package com.processmanager;
 
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.SimpleLongProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 public class ProcessData {
-
   private final LongProperty processID;
   private final StringProperty name;
   private final StringProperty user;
@@ -19,37 +15,35 @@ public class ProcessData {
     this.commandLine = new SimpleStringProperty(commandLine);
   }
 
-  // Getter methods for the properties
-  public LongProperty processIDProperty() {
-    return processID;
-  }
-
-  public StringProperty nameProperty() {
-    return name;
-  }
-
-  public StringProperty userProperty() {
-    return user;
-  }
-
-  public StringProperty commandLineProperty() {
-    return commandLine;
-  }
-
-  // Regular getter methods
   public long getProcessID() {
     return processID.get();
+  }
+
+  public LongProperty processIDProperty() {
+    return processID;
   }
 
   public String getName() {
     return name.get();
   }
 
+  public StringProperty nameProperty() {
+    return name;
+  }
+
   public String getUser() {
     return user.get();
   }
 
+  public StringProperty userProperty() {
+    return user;
+  }
+
   public String getCommandLine() {
     return commandLine.get();
+  }
+
+  public StringProperty commandLineProperty() {
+    return commandLine;
   }
 }

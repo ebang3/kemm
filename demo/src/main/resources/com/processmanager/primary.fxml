@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.processmanager.PrimaryController">
+<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.processmanager.PrimaryController">
     <TableView fx:id="processTableView" prefHeight="400" prefWidth="600">
         <columns>
             <TableColumn fx:id="processIDColumn" prefWidth="150" text="Process ID" />
@@ -13,4 +20,22 @@
             <TableColumn fx:id="commandLineColumn" prefWidth="150" text="Command Line" />
         </columns>
     </TableView>
+   <HBox prefHeight="100.0" prefWidth="200.0">
+      <children>
+         <AnchorPane />
+         <GridPane prefHeight="100.0" prefWidth="171.0">
+            <columnConstraints>
+               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            </columnConstraints>
+            <rowConstraints>
+               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+         </GridPane>
+         <BorderPane>
+            <center>
+               <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="224.0" text="Load Processes" onAction="#invokeFindProcessTask" />
+            </center>
+         </BorderPane>
+      </children></HBox>
+
 </VBox>

@@ -1,52 +1,49 @@
 package com.processmanager;
 
-import java.io.IOException;
-import java.util.List;
-
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable; // Make sure to import Initializable
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import oshi.SystemInfo;
-import oshi.software.os.OSProcess;
-import oshi.software.os.OperatingSystem;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PrimaryController implements Initializable { // Implement Initializable
+public class PrimaryController implements Initializable {
 
     private FindProcessTask findProcessTask;
 
     @FXML
-    private TableView<ProcessData> processTableView; // TableView to display process data
+    private TableView<ProcessData> processTableView;
 
     @FXML
-    private TableColumn<ProcessData, Long> processIDColumn; // Column for Process ID
-    @FXML
-    private TableColumn<ProcessData, String> nameColumn; // Column for Process Name
-    @FXML
-    private TableColumn<ProcessData, String> userColumn; // Column for User
-    @FXML
-    private TableColumn<ProcessData, String> commandLineColumn; // Column for Command Line
+    private TableColumn<ProcessData, Long> processIDColumn;
 
     @FXML
+    private TableColumn<ProcessData, String> nameColumn;
+
+    @FXML
+    private TableColumn<ProcessData, String> userColumn;
+
+    @FXML
+    private TableColumn<ProcessData, String> commandLineColumn;
+
+    private ObservableList<ProcessData> processList = FXCollections.observableArrayList();
+
     @Override
-    public void initialize(URL location, ResourceBundle resources) { // Override initialize() method
+    public void initialize(URL location, ResourceBundle resources) {
+        // Initialize the TableView columns
+        processIDColumn.setCellValueFactory(new PropertyValueFactory<>("processID"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        userColumn.setCellValueFactory(new PropertyValueFactory<>("user"));
+        commandLineColumn.setCellValueFactory(new PropertyValueFactory<>("commandLine"));
 
-        // Set up the columns in the TableView
-        // processIDColumn.setCellValueFactory(cellData ->
-        // cellData.getValue().processIDProperty().asObject());
-        // nameColumn.setCellValueFactory(cellData ->
-        // cellData.getValue().nameProperty());
-        // userColumn.setCellValueFactory(cellData ->
-        // cellData.getValue().userProperty());
-        // commandLineColumn.setCellValueFactory(cellData ->
-        // cellData.getValue().commandLineProperty());
+        // Bind the observable list to the TableView
+        processTableView.setItems(processList);
     }
 
     public void invokeFindProcessTask() {
@@ -54,6 +51,20 @@ public class PrimaryController implements Initializable { // Implement Initializ
             findProcessTask.cancel();
         }
 
+        // Create a new task to fetch process data
         findProcessTask = new FindProcessTask();
+
+        // Bind the task's output to the TableView
+        findProcessTask.setOnSucceeded(event -> {
+            processList.setAll(findProcessTask.getValue());
+        });
+
+        findProcessTask.setOnFailed(event -> {
+            Throwable error = findProcessTask.getException();
+            error.printStackTrace();
+        });
+
+        // Run the task in a background thread
+        new Thread(findProcessTask).start();
     }
 }
