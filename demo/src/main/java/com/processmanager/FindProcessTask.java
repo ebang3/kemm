@@ -25,7 +25,11 @@ public class FindProcessTask extends Task<ObservableList<ProcessData>> {
           osProcess.getProcessID(),
           osProcess.getName(),
           osProcess.getUser(),
-          osProcess.getCommandLine());
+          osProcess.getCommandLine(),
+          osProcess.getProcessCpuLoadCumulative() * 100,
+          osProcess.getResidentSetSize(),
+          osProcess.getBytesRead() + osProcess.getBytesWritten()
+      );
       processList.add(process);
     }
     return processList;

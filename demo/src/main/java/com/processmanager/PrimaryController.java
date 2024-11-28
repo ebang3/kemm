@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -32,6 +34,19 @@ public class PrimaryController implements Initializable {
     @FXML
     private TableColumn<ProcessData, String> commandLineColumn;
 
+    @FXML
+    private TableColumn<ProcessData, Double> cpuUsageColumn;
+
+    @FXML
+    private TableColumn<ProcessData, Long> memoryUsageColumn;
+
+    @FXML
+    private TableColumn<ProcessData, Long> diskUsageColumn;
+
+    @FXML
+    private Button endTaskButton;
+
+    
     private ObservableList<ProcessData> processList = FXCollections.observableArrayList();
 
     @Override
@@ -41,9 +56,16 @@ public class PrimaryController implements Initializable {
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         userColumn.setCellValueFactory(new PropertyValueFactory<>("user"));
         commandLineColumn.setCellValueFactory(new PropertyValueFactory<>("commandLine"));
+        cpuUsageColumn.setCellValueFactory(new PropertyValueFactory<>("cpuUsage"));
+        memoryUsageColumn.setCellValueFactory(new PropertyValueFactory<>("memoryUsage"));
+        diskUsageColumn.setCellValueFactory(new PropertyValueFactory<>("diskUsage"));
+
+        endTaskButton.setOnAction(event -> endSelectedTask());
 
         // Bind the observable list to the TableView
         processTableView.setItems(processList);
+
+        
     }
 
     public void invokeFindProcessTask() {
@@ -66,5 +88,22 @@ public class PrimaryController implements Initializable {
 
         // Run the task in a background thread
         new Thread(findProcessTask).start();
+    }
+        private void endSelectedTask() {
+        ProcessData selectedProcess = processTableView.getSelectionModel().getSelectedItem();
+        if (selectedProcess != null) {
+            try {
+                int processID = (int) selectedProcess.getProcessID();
+                Runtime.getRuntime().exec("taskkill /PID " + processID + " /F");
+                invokeFindProcessTask(); // Refresh process list
+            } catch (Exception e) {
+                e.printStackTrace();
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Failed to terminate the process.");
+                    alert.showAndWait();
+                });
+            }
+        }
     }
 }
