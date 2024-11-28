@@ -14,28 +14,33 @@
 <VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.processmanager.PrimaryController">
     <TableView fx:id="processTableView" prefHeight="400" prefWidth="600">
         <columns>
-            <TableColumn fx:id="processIDColumn" prefWidth="150" text="Process ID" />
+            <TableColumn fx:id="processIDColumn" prefWidth="100" text="Process ID" />
             <TableColumn fx:id="nameColumn" prefWidth="150" text="Process Name" />
-            <TableColumn fx:id="userColumn" prefWidth="150" text="User" />
-            <TableColumn fx:id="commandLineColumn" prefWidth="150" text="Command Line" />
+            <!-- Added CPU Usage Column -->
+            <TableColumn fx:id="cpuUsageColumn" prefWidth="100" text="CPU Usage (%)" />
+            <TableColumn fx:id="memoryUsageColumn" prefWidth="100" text="Memory Usage (%)" />
+            <!-- Added I/O Usage Column -->
+            <TableColumn fx:id="ioUsageColumn" prefWidth="100" text="I/O Usage (KB)" />
         </columns>
     </TableView>
-   <HBox prefHeight="100.0" prefWidth="200.0">
-      <children>
-         <AnchorPane />
-         <GridPane prefHeight="100.0" prefWidth="171.0">
-            <columnConstraints>
-               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-            </columnConstraints>
-            <rowConstraints>
-               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-         </GridPane>
-         <BorderPane>
-            <center>
-               <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="224.0" text="Load Processes" onAction="#invokeFindProcessTask" />
-            </center>
-         </BorderPane>
-      </children></HBox>
+
+    <HBox prefHeight="100.0" prefWidth="200.0">
+        <children>
+            <AnchorPane />
+            <GridPane prefHeight="100.0" prefWidth="171.0">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+            </GridPane>
+            <BorderPane>
+                <center>
+                    <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="224.0" text="Load Processes" onAction="#invokeFindProcessTask" />
+                </center>
+            </BorderPane>
+        </children>
+    </HBox>
 
 </VBox>

@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,7 +31,13 @@ public class PrimaryController implements Initializable {
     private TableColumn<ProcessData, String> userColumn;
 
     @FXML
-    private TableColumn<ProcessData, String> commandLineColumn;
+    private TableColumn<ProcessData, Double> cpuUsageColumn; // New column for CPU usage
+
+    @FXML
+    private TableColumn<ProcessData, Double> memoryUsageColumn; // New column for CPU usage
+
+    @FXML
+    private TableColumn<ProcessData, Double> ioUsageColumn; // New column for I/O usage
 
     private ObservableList<ProcessData> processList = FXCollections.observableArrayList();
 
@@ -39,8 +46,26 @@ public class PrimaryController implements Initializable {
         // Initialize the TableView columns
         processIDColumn.setCellValueFactory(new PropertyValueFactory<>("processID"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        userColumn.setCellValueFactory(new PropertyValueFactory<>("user"));
-        commandLineColumn.setCellValueFactory(new PropertyValueFactory<>("commandLine"));
+        cpuUsageColumn.setCellValueFactory(new PropertyValueFactory<>("cpuUsage")); // Bind CPU usage column
+        memoryUsageColumn.setCellValueFactory(new PropertyValueFactory<>("memoryUsage")); // Bind CPU usage column
+        ioUsageColumn.setCellValueFactory(new PropertyValueFactory<>("ioUsage")); // Bind I/O usage column
+
+        // Set the cell factory for cpuUsageColumn to format the CPU usage as a
+        // percentage with 1 decimal place
+        cpuUsageColumn.setCellFactory(col -> {
+            return new TextFieldTableCell<ProcessData, Double>() {
+                @Override
+                public void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        // Format the CPU usage as a percentage with 1 decimal place
+                        setText(String.format("%.1f", item) + "%");
+                    }
+                }
+            };
+        });
 
         // Bind the observable list to the TableView
         processTableView.setItems(processList);

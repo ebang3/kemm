@@ -2,4 +2,3 @@ com\processmanager\FindProcessTask.class
 com\processmanager\App.class
 com\processmanager\PrimaryController.class
 com\processmanager\ProcessData.class
-com\processmanager\SecondaryController.class
