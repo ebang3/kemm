@@ -24,10 +24,8 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        scene = new Scene(loadFXML("primary"), 725, 500);
+        scene = new Scene(loadFXML("primary"), 640, 480);
         stage.setScene(scene);
-        stage.setResizable(false);
-        stage.setTitle("KEMM's Process Manager");
         stage.show();
     }
 

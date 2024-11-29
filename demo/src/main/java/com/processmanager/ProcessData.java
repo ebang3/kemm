@@ -5,19 +5,18 @@ import javafx.beans.property.*;
 public class ProcessData {
   private final LongProperty processID;
   private final StringProperty name;
+  private final StringProperty user;
   private final DoubleProperty cpuUsage;
   private final DoubleProperty memoryUsage;
   private final DoubleProperty ioUsage;
-  private final StringProperty cpuOrIO;
 
-  public ProcessData(long processID, String name, double cpuUsage, double memoryUsage, double ioUsage,
-      String cpuOrIO) {
+  public ProcessData(long processID, String name, String user, double cpuUsage, double memoryUsage, double ioUsage) {
     this.processID = new SimpleLongProperty(processID);
     this.name = new SimpleStringProperty(name);
+    this.user = new SimpleStringProperty(user);
     this.cpuUsage = new SimpleDoubleProperty(cpuUsage);
     this.memoryUsage = new SimpleDoubleProperty(memoryUsage);
     this.ioUsage = new SimpleDoubleProperty(ioUsage);
-    this.cpuOrIO = new SimpleStringProperty(cpuOrIO);
   }
 
   public long getProcessID() {
@@ -36,20 +35,12 @@ public class ProcessData {
     return name;
   }
 
-  public double getIoUsage() {
-    return ioUsage.get();
+  public String getUser() {
+    return user.get();
   }
 
-  public DoubleProperty ioUsageProperty() {
-    return ioUsage;
-  }
-
-  public String getCpuOrIO() {
-    return cpuOrIO.get();
-  }
-
-  public StringProperty cpuOrIOProperty() {
-    return cpuOrIO;
+  public StringProperty userProperty() {
+    return user;
   }
 
   public double getCpuUsage() {
@@ -60,19 +51,19 @@ public class ProcessData {
     return cpuUsage;
   }
 
-  public long getMemoryUsage() {
+  public double getMemoryUsage() {
     return memoryUsage.get();
   }
 
-  public LongProperty memoryUsageProperty() {
+  public DoubleProperty MemoryUsageProperty() {
     return memoryUsage;
   }
 
-  public long getDiskUsage() {
-    return diskUsage.get();
+  public double getIoUsage() {
+    return ioUsage.get();
   }
 
-  public LongProperty diskUsageProperty() {
-    return diskUsage;
+  public DoubleProperty ioUsageProperty() {
+    return ioUsage;
   }
 }
