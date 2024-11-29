@@ -6,6 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.AnchorPane?>
 
 <VBox alignment="CENTER" spacing="10" prefHeight="600" prefWidth="1000" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.processmanager.PrimaryController">
     <TableView fx:id="processTableView" prefHeight="400" prefWidth="700">
@@ -24,3 +25,4 @@
         <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="224.0" text="Load Processes" onAction="#invokeFindProcessTask" />
     </HBox>
 </VBox>
+</AnchorPane>

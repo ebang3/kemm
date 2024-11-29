@@ -36,22 +36,6 @@ public class ProcessData {
     return name;
   }
 
-  public double getCpuUsage() {
-    return cpuUsage.get();
-  }
-
-  public DoubleProperty cpuUsageProperty() {
-    return cpuUsage;
-  }
-
-  public double getMemoryUsage() {
-    return memoryUsage.get();
-  }
-
-  public DoubleProperty MemoryUsageProperty() {
-    return memoryUsage;
-  }
-
   public double getIoUsage() {
     return ioUsage.get();
   }
@@ -66,5 +50,29 @@ public class ProcessData {
 
   public StringProperty cpuOrIOProperty() {
     return cpuOrIO;
+  }
+
+  public double getCpuUsage() {
+    return cpuUsage.get();
+  }
+
+  public DoubleProperty cpuUsageProperty() {
+    return cpuUsage;
+  }
+
+  public long getMemoryUsage() {
+    return memoryUsage.get();
+  }
+
+  public LongProperty memoryUsageProperty() {
+    return memoryUsage;
+  }
+
+  public long getDiskUsage() {
+    return diskUsage.get();
+  }
+
+  public LongProperty diskUsageProperty() {
+    return diskUsage;
   }
 }

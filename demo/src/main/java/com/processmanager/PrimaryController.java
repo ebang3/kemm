@@ -32,16 +32,7 @@ public class PrimaryController implements Initializable {
     private TableColumn<ProcessData, String> userColumn;
 
     @FXML
-    private TableColumn<ProcessData, Double> cpuUsageColumn;
-
-    @FXML
-    private TableColumn<ProcessData, Double> memoryUsageColumn;
-
-    @FXML
-    private TableColumn<ProcessData, Double> ioUsageColumn;
-
-    @FXML
-    private TableColumn<ProcessData, String> cpuOrIOColumn;
+    private TableColumn<ProcessData, String> commandLineColumn;
 
     private ObservableList<ProcessData> processList = FXCollections.observableArrayList();
 
@@ -50,60 +41,12 @@ public class PrimaryController implements Initializable {
         // Initialize the TableView columns
         processIDColumn.setCellValueFactory(new PropertyValueFactory<>("processID"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        cpuUsageColumn.setCellValueFactory(new PropertyValueFactory<>("cpuUsage"));
-        memoryUsageColumn.setCellValueFactory(new PropertyValueFactory<>("memoryUsage"));
-        ioUsageColumn.setCellValueFactory(new PropertyValueFactory<>("ioUsage"));
-        cpuOrIOColumn.setCellValueFactory(new PropertyValueFactory<>("cpuOrIO"));
-
-        // Set the cell factory for cpuUsageColumn to format the cpu usage as a
-        // percentage with 1 decimal place
-        cpuUsageColumn.setCellFactory(col -> {
-            return new TextFieldTableCell<ProcessData, Double>() {
-                @Override
-                public void updateItem(Double item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setText(null);
-                    } else {
-                        // Format the CPU usage as a percentage with 1 decimal place
-                        setText(String.format("%.1f", item) + "%");
-                    }
-                }
-            };
-        });
-
-        memoryUsageColumn.setCellFactory(col -> {
-            return new TextFieldTableCell<ProcessData, Double>() {
-                @Override
-                public void updateItem(Double item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setText(null);
-                    } else {
-                        // Format the CPU usage as a percentage with 1 decimal place
-                        setText(String.format("%.1f", item) + " MB");
-                    }
-                }
-            };
-        });
-
-        ioUsageColumn.setCellFactory(col -> {
-            return new TextFieldTableCell<ProcessData, Double>() {
-                @Override
-                public void updateItem(Double item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setText(null);
-                    } else {
-                        // Format the CPU usage as a percentage with 1 decimal place
-                        setText(String.format("%.1f", item) + " MB/s");
-                    }
-                }
-            };
-        });
+        userColumn.setCellValueFactory(new PropertyValueFactory<>("user"));
+        commandLineColumn.setCellValueFactory(new PropertyValueFactory<>("commandLine"));
 
         // Bind the observable list to the TableView
         processTableView.setItems(processList);
+
     }
 
     public void invokeFindProcessTask() {
@@ -126,5 +69,23 @@ public class PrimaryController implements Initializable {
 
         // Run the task in a background thread
         new Thread(findProcessTask).start();
+    }
+
+    private void endSelectedTask() {
+        ProcessData selectedProcess = processTableView.getSelectionModel().getSelectedItem();
+        if (selectedProcess != null) {
+            try {
+                int processID = (int) selectedProcess.getProcessID();
+                Runtime.getRuntime().exec("taskkill /PID " + processID + " /F");
+                invokeFindProcessTask(); // Refresh process list
+            } catch (Exception e) {
+                e.printStackTrace();
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("Failed to terminate the process.");
+                    alert.showAndWait();
+                });
+            }
+        }
     }
 }
