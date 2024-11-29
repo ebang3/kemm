@@ -10,6 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,13 +32,16 @@ public class PrimaryController implements Initializable {
     private TableColumn<ProcessData, String> userColumn;
 
     @FXML
-    private TableColumn<ProcessData, Double> cpuUsageColumn; // New column for CPU usage
+    private TableColumn<ProcessData, Double> cpuUsageColumn;
 
     @FXML
-    private TableColumn<ProcessData, Double> memoryUsageColumn; // New column for CPU usage
+    private TableColumn<ProcessData, Double> memoryUsageColumn;
 
     @FXML
-    private TableColumn<ProcessData, Double> ioUsageColumn; // New column for I/O usage
+    private TableColumn<ProcessData, Double> ioUsageColumn;
+
+    @FXML
+    private TableColumn<ProcessData, String> cpuOrIOColumn;
 
     private ObservableList<ProcessData> processList = FXCollections.observableArrayList();
 
@@ -46,9 +50,10 @@ public class PrimaryController implements Initializable {
         // Initialize the TableView columns
         processIDColumn.setCellValueFactory(new PropertyValueFactory<>("processID"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        cpuUsageColumn.setCellValueFactory(new PropertyValueFactory<>("cpuUsage")); // Bind CPU usage column
-        memoryUsageColumn.setCellValueFactory(new PropertyValueFactory<>("memoryUsage")); // Bind CPU usage column
-        ioUsageColumn.setCellValueFactory(new PropertyValueFactory<>("ioUsage")); // Bind I/O usage column
+        cpuUsageColumn.setCellValueFactory(new PropertyValueFactory<>("cpuUsage"));
+        memoryUsageColumn.setCellValueFactory(new PropertyValueFactory<>("memoryUsage"));
+        ioUsageColumn.setCellValueFactory(new PropertyValueFactory<>("ioUsage"));
+        cpuOrIOColumn.setCellValueFactory(new PropertyValueFactory<>("cpuOrIO"));
 
         // Set the cell factory for cpuUsageColumn to format the cpu usage as a
         // percentage with 1 decimal place
