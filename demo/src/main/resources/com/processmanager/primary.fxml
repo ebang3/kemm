@@ -19,9 +19,9 @@
             <TableColumn fx:id="nameColumn" prefWidth="150" text="Process Name" />
             <!-- Added CPU Usage Column -->
             <TableColumn fx:id="cpuUsageColumn" prefWidth="100" text="CPU Usage (%)" />
-            <TableColumn fx:id="memoryUsageColumn" prefWidth="150" text="Memory Usage (MB)" />
+            <TableColumn fx:id="memoryUsageColumn" prefWidth="100" text="Memory Usage (%)" />
             <!-- Added I/O Usage Column -->
-            <TableColumn fx:id="ioUsageColumn" prefWidth="150" text="I/O Usage (MB/s)" />
+            <TableColumn fx:id="ioUsageColumn" prefWidth="100" text="I/O Usage (KB)" />
         </columns>
     </TableView>
 
