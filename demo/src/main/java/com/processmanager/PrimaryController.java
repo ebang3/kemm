@@ -50,7 +50,7 @@ public class PrimaryController implements Initializable {
         memoryUsageColumn.setCellValueFactory(new PropertyValueFactory<>("memoryUsage")); // Bind CPU usage column
         ioUsageColumn.setCellValueFactory(new PropertyValueFactory<>("ioUsage")); // Bind I/O usage column
 
-        // Set the cell factory for cpuUsageColumn to format the CPU usage as a
+        // Set the cell factory for cpuUsageColumn to format the cpu usage as a
         // percentage with 1 decimal place
         cpuUsageColumn.setCellFactory(col -> {
             return new TextFieldTableCell<ProcessData, Double>() {
@@ -62,6 +62,36 @@ public class PrimaryController implements Initializable {
                     } else {
                         // Format the CPU usage as a percentage with 1 decimal place
                         setText(String.format("%.1f", item) + "%");
+                    }
+                }
+            };
+        });
+
+        memoryUsageColumn.setCellFactory(col -> {
+            return new TextFieldTableCell<ProcessData, Double>() {
+                @Override
+                public void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        // Format the CPU usage as a percentage with 1 decimal place
+                        setText(String.format("%.1f", item) + " MB");
+                    }
+                }
+            };
+        });
+
+        ioUsageColumn.setCellFactory(col -> {
+            return new TextFieldTableCell<ProcessData, Double>() {
+                @Override
+                public void updateItem(Double item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        // Format the CPU usage as a percentage with 1 decimal place
+                        setText(String.format("%.1f", item) + " MB/s");
                     }
                 }
             };

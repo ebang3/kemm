@@ -29,12 +29,12 @@ public class FindProcessTask extends Task<ObservableList<ProcessData>> {
 
       double cpuUsage = osProcess.getProcessCpuLoadBetweenTicks(osProcess) * 100;
       // Skip processes with no CPU usage
-      if (cpuUsage < 1 || cpuUsage > 100) {
+      if (cpuUsage == 0 || cpuUsage > 100) {
         continue; // Skip to the next process
       }
       long usedMemory = osProcess.getResidentSetSize();
-      double memoryUsage = (double) ((usedMemory * 100) / totalMemory);
-      double ioUsage = (osProcess.getBytesRead() + osProcess.getBytesWritten()) / 1024.0;
+      double memoryUsage = ((double) usedMemory) / (1024 * 1024);
+      double ioUsage = (osProcess.getBytesRead() + osProcess.getBytesWritten()) / (1024.0 * 1024.0);
       // Create ProcessData for each process
       ProcessData process = new ProcessData(
           processID, name, user, cpuUsage, memoryUsage, ioUsage);
