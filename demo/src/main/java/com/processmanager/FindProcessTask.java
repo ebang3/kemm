@@ -1,3 +1,4 @@
+
 package com.processmanager;
 
 import java.util.List;
@@ -19,25 +20,32 @@ public class FindProcessTask extends Task<ObservableList<ProcessData>> {
     List<OSProcess> processes = os.getProcesses();
 
     ObservableList<ProcessData> processList = FXCollections.observableArrayList();
-    GlobalMemory globalMemory = sysInfo.getHardware().getMemory();
-    long totalMemory = globalMemory.getTotal();
 
     for (OSProcess osProcess : processes) {
       long processID = osProcess.getProcessID();
       String name = osProcess.getName();
-      String user = osProcess.getUser();
+      String cpuOrIO = "";
 
       double cpuUsage = osProcess.getProcessCpuLoadBetweenTicks(osProcess) * 100;
       // Skip processes with no CPU usage
-      if (cpuUsage < 1 || cpuUsage > 100) {
+      if (cpuUsage == 0 || cpuUsage > 100) {
         continue; // Skip to the next process
       }
       long usedMemory = osProcess.getResidentSetSize();
-      double memoryUsage = (double) ((usedMemory * 100) / totalMemory);
-      double ioUsage = (osProcess.getBytesRead() + osProcess.getBytesWritten()) / 1024.0;
+      double memoryUsage = ((double) usedMemory) / (1024 * 1024);
+      double ioByteUsage = osProcess.getBytesRead() + osProcess.getBytesWritten();
+      double ioUsage = (ioByteUsage) / (1024.0 * 1024.0);
+
+      if (cpuUsage > 50 && ioByteUsage < (1024 * 1024)) {
+        cpuOrIO = "CPU";
+      } else if (cpuUsage < 20 && ioByteUsage > (10 * 1024 * 1024)) {
+        cpuOrIO = "I/O";
+      } else {
+        continue;
+      }
       // Create ProcessData for each process
       ProcessData process = new ProcessData(
-          processID, name, user, cpuUsage, memoryUsage, ioUsage);
+          processID, name, cpuUsage, memoryUsage, ioUsage, cpuOrIO);
       processList.add(process);
     }
     return processList;
