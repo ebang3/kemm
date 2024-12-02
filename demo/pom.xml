@@ -13,12 +13,12 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>22</version>
+            <version> 23.0.1 </version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>22</version>
+            <version> 23.0.1</version>
         </dependency>
         <dependency>
             <groupId>com.github.oshi</groupId>
@@ -28,7 +28,7 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.32</version> <!-- Use a version compatible with your project -->
+            <version>2.0.7</version> 
         </dependency>
 
     </dependencies>

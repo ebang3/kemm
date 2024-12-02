@@ -1,5 +1,7 @@
-com\processmanager\FindProcessTask.class
-com\processmanager\App.class
-com\processmanager\PrimaryController.class
-com\processmanager\PrimaryController$1.class
-com\processmanager\ProcessData.class
+com/processmanager/ProcessData.class
+com/processmanager/FindProcessTask.class
+com/processmanager/PrimaryController.class
+com/processmanager/PrimaryController$1.class
+com/processmanager/PrimaryController$3.class
+com/processmanager/App.class
+com/processmanager/PrimaryController$2.class
